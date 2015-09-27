@@ -91,10 +91,10 @@ def search_specialty():
 
 @app.route('/api/save-response', methods=['POST'])
 def save_response():
-    specialty = request.form['specialty']
-    doctor_name = request.form['doctor']
-    address = request.form['address']
-    uid = request.form['uid']
+    specialty = request.form.get('specialty', '')
+    doctor_name = request.form.get('doctor', '')
+    address = request.form.get('address', '')
+    uid = request.form.get('uid', '')
 
     data = {
         'specialty': specialty,
