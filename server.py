@@ -73,6 +73,7 @@ def search_specialty():
             for practice in practices:
                 if practice['within_search_area']:
                     new_doctor.practice = practice['name']
+                    new_doctor.uid = practice['uid']
                     new_doctor.set_address(practice['visit_address'])
                     for phone in practice['phones']:
                         new_doctor.phone_number = phone['number']
