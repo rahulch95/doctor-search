@@ -62,10 +62,8 @@ def search_specialty():
         'sort': 'rating-desc'
     }
     print(data)
-    logging.info(resp)
     resp = requests.get(URL + 'doctors', data)
     print(resp)
-    logging.info(resp)
 
     if resp.status_code == 200:
         data = json.loads(resp.text)
