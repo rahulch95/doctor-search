@@ -5,4 +5,4 @@ SPECIALTYUIDMAPPING = {
 }
 
 def getSpecialtyUidMapping(specialty):
-    return SPECIALTYUIDMAPPING['specialty']
+    return SPECIALTYUIDMAPPING[specialty]
