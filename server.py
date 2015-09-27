@@ -50,8 +50,8 @@ def hello():
 
 @app.route('/api/search-specialty', methods=['POST'])
 def search_specialty():
-    specialty = request.form['specialty']
-    phone_number = request.form['phone_number']
+    specialty = request.form.get('specialty', 'allergy')
+    phone_number = request.form.get('phone_number', '')
     data = {
         'specialty_uid': getMapping.getSpecialtyUidMapping(specialty),
         'user_key': secret,
