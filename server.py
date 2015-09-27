@@ -61,6 +61,8 @@ def search_specialty():
         'limit': 3,
         'sort': 'rating-desc'
     }
+    print(data)
+    logging.info(resp)
     resp = requests.get(URL + 'doctors', data)
     print(resp)
     logging.info(resp)
