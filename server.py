@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request
+from flask import Flask, Response
 import getMapping
 import getLocation
 import requests
@@ -60,9 +60,10 @@ def search_specialty():
         'limit': 3,
         'sort': 'rating-desc'
     }
-    print(URL + 'doctors')
     resp = requests.get(URL + 'doctors', data)
+    print(resp)
     logging.info(resp)
+
     if resp.status_code == 200:
         data = json.loads(resp.text)
         i = 1
@@ -83,5 +84,5 @@ def search_specialty():
             new_doctor.name = profile['first_name'] + ' ' + profile['last_name']
             response[i] = new_doctor.to_dict()
             i += 1
-        return json.dumps(response), 200
-    return {}, 400
+        return Response(response, mimetype='text/json; charset=utf-8')
+    return Response({}, mimetype='text/json; charset=utf-8'), 400
