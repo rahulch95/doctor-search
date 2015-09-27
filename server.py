@@ -1,5 +1,5 @@
 import os
-from flask import Flask, Response
+from flask import Flask, request
 import getMapping
 import getLocation
 import requests
@@ -9,6 +9,7 @@ import logging
 secret = os.environ.get('betterdoctor-apikey', None)
 app = Flask(__name__)
 URL = "https://api.betterdoctor.com/2015-01-27/"
+DATABASE = "https://api.mongolab.com/api/1/databases/doctor/collections/doctors?apiKey=" + str(os.environ.get('mongo-apikey', None))
 
 
 class Doctor:
@@ -49,8 +50,8 @@ def hello():
 
 @app.route('/api/search-specialty', methods=['POST'])
 def search_specialty():
-    specialty = 'dietitian' #request.form['specialty']
-    phone_number = '1281128' #request.form['phone_number']
+    specialty = request.form['specialty']
+    phone_number = request.form['phone_number']
     data = {
         'specialty_uid': getMapping.getSpecialtyUidMapping(specialty),
         'user_key': secret,
@@ -86,3 +87,22 @@ def search_specialty():
             i += 1
         return json.dumps(response), 200, {'Content-Type': 'application/json'}
     return json.dumps({}), 400, {'Content-Type': 'application/json'}
+
+
+@app.route('/api/save-response', methods=['POST'])
+def save_response():
+    specialty = request.form['specialty']
+    doctor_name = request.form['doctor']
+    address = request.form['address']
+    uid = request.form['uid']
+
+    data = {
+        'specialty': specialty,
+        'doctor_name': doctor_name,
+        'address': address,
+        'uid': uid
+    }
+
+    requests.post(DATABASE, data=data)
+
+    return json.dumps({}), 200, {'Content-Type': 'application/json'}
