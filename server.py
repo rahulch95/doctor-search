@@ -84,5 +84,5 @@ def search_specialty():
             new_doctor.name = profile['first_name'] + ' ' + profile['last_name']
             response[i] = new_doctor.to_dict()
             i += 1
-        return Response(response, mimetype='text/json; charset=utf-8')
-    return Response({}, mimetype='text/json; charset=utf-8'), 400
+        return Response(response=response, content_type='text/json; charset=utf-8', status=200)
+    return Response({}, mimetype='text/json; charset=utf-8', status=400)
